@@ -23,8 +23,8 @@ public class CepController {
     }
 
     @GetMapping(value = "/{cep}")
-    ResponseEntity<ResponseCorreios> findByCep(@PathVariable(value = "cep") String cep) throws Exception {
+    ResponseCorreios findByCep(@PathVariable(value = "cep") String cep) throws Exception {
         ResponseCorreios response = service.findZipCode(cep);
-        return ResponseEntity.ok().body(response);
+        return response;
     }
 }
