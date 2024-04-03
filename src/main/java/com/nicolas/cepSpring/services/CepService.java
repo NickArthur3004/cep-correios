@@ -16,8 +16,8 @@ import java.util.List;
 
 @Service
 public class CepService {
-    private String token = "Bearer " + "eyJhbGciOiJSUzUxMiJ9.eyJhbWJpZW50ZSI6IlBST0RVQ0FPIiwiaWQiOiI0NzE3MzI5NDAwMDExNyIsInBmbCI6IlBKIiwiY25waiI6IjQ3MTczMjk0MDAwMTE3IiwiY2FydGFvLXBvc3RhZ2VtIjp7Im51bWVybyI6IjAwNzc2NjIwNTkiLCJjb250cmF0byI6Ijk5MTI2MDMxNDIiLCJkciI6NzIsImFwaSI6WzI3LDM0LDM1LDM2LDM3LDQxLDc2LDc4LDgwLDgzLDg3LDkzLDU2Niw1ODddfSwiaXAiOiI4LjIwOS42Ny4yMCwgMTkyLjE2OC4xLjEzMCIsImlhdCI6MTcxMjE0MjUzNiwiaXNzIjoidG9rZW4tc2VydmljZSIsImV4cCI6MTcxMjIyODkzNiwianRpIjoiNjQxNzNjNTYtOTcyOC00MmVkLTk5ZDMtOTE0NGYyYjhjOTY3In0.trg835EmaDd7gd3ex4pkt6rfIER-nbWJSgvUTUBL9Y6lrtcAygj0UkKaJ4Qbkst1UPUJp0oqoj4YMvTL3K4-9q8U6INJGTaZlQy5F4My3pVQ3VTeUoH1pMFEKpOmqFWyAbyq5wubPG6RJBgZbSHrvjIHoo8OuyIPUdUxVW-1X88MDsHT4bactOIo8LC01dfC6EQCy58tuaDAPuVUWzssO3vD1upfpSYhQ3plRoGC8BRZkDSY2TUL2mhQj6NUxsLy7K2YhfuEJtApvpLkzeAqxFdPKYgDVRj_Za_AHyTiblzfcm4ubaYkNMMytil-L8lsVQV94aXn9-qjx11begkW6Q";
-    static String webService = "https://api.correios.com.br/cep/v2/enderecos";
+    private String token = "Bearer " + "Token de acesso a api correios";
+    static String webService = "Url da api que deseja usar";
 
     public ResponseCorreios findZipCode(String cep) throws Exception {
 
