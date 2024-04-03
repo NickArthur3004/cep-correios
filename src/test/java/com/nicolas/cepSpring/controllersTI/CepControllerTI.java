@@ -2,11 +2,9 @@ package com.nicolas.cepSpring.controllersTI;
 
 import com.nicolas.cepSpring.responses.ResponseCorreios;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -21,6 +19,7 @@ public class CepControllerTI extends BaseControllerTI{
     String RESOURCE_BASE_URL = "/cep";
 
     @Test
+    @DisplayName("Busca Cep´s por range")
     void testFindCepByRange(){
             String cepInicial = "06413000";
             String cepFinal = "06413999";
@@ -37,5 +36,22 @@ public class CepControllerTI extends BaseControllerTI{
 
             Assertions.assertNotNull(responseGet);
             Assertions.assertEquals(45, responseGet.getBody().size());
+    }
+
+    @Test
+    @DisplayName("Busca de endereço por cep")
+    void testFindCep(){
+        String cep = "06413000";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+
+        StringBuilder url = new StringBuilder(RESOURCE_BASE_URL);
+        url.append("/" + cep);
+
+        ResponseEntity<ResponseCorreios> responseGet = restTemplate.exchange(url.toString(), HttpMethod.GET, requestEntity, new ParameterizedTypeReference<ResponseCorreios>() {});
+
+        Assertions.assertNotNull(responseGet);
+        Assertions.assertEquals(cep, responseGet.getBody().getCep().toString());
     }
 }
