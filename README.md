@@ -12,6 +12,7 @@
 - Testes de integração
 - Chamadas a API externas 
 - Leitura e Gerador de arquivos excel
+- Agendamento de metodo
 - Biblioteca de json do google
 
 
