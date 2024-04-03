@@ -1,4 +1,5 @@
-package com.nicolas.models;
+package com.nicolas.cepSpring.models;
+
 
 public class Address {
 

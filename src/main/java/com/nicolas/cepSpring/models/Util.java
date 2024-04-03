@@ -1,4 +1,4 @@
-package com.nicolas.models;
+package com.nicolas.cepSpring.models;
 
 import java.io.BufferedReader;
 import java.io.IOException;

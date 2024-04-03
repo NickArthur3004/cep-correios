@@ -1,4 +1,4 @@
-package com.nicolas.responses;
+package com.nicolas.cepSpring.responses;
 
 public class ResponseCorreios {
 
@@ -150,5 +150,25 @@ public class ResponseCorreios {
 
     public void setNumeroFinal(Integer numeroFinal) {
         this.numeroFinal = numeroFinal;
+    }
+
+    @Override
+    public String toString() {
+        return "ResponseCorreios{" +
+                "cep='" + cep + '\'' +
+                ", uf='" + uf + '\'' +
+                ", numeroLocalidade=" + numeroLocalidade +
+                ", localidade='" + localidade + '\'' +
+                ", logradouro='" + logradouro + '\'' +
+                ", tipoLogradouro='" + tipoLogradouro + '\'' +
+                ", nomeLogradouro='" + nomeLogradouro + '\'' +
+                ", complemento='" + complemento + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", tipoCEP=" + tipoCEP +
+                ", cepUnidadeOperacional='" + cepUnidadeOperacional + '\'' +
+                ", lado='" + lado + '\'' +
+                ", numeroInicial=" + numeroInicial +
+                ", numeroFinal=" + numeroFinal +
+                '}';
     }
 }

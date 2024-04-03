@@ -1,32 +1,36 @@
-package com.nicolas;
+package com.nicolas.cepSpring.execs;
 
-import com.nicolas.exceptions.ZipCodeNotFoundException;
-import com.nicolas.models.Address;
-import com.nicolas.responses.ResponseCorreios;
-import com.nicolas.services.CepService;
-import com.nicolas.services.ExcelService;
+
+
+import com.nicolas.cepSpring.models.Address;
+import com.nicolas.cepSpring.responses.ResponseCorreios;
+import com.nicolas.cepSpring.services.CepService;
+import com.nicolas.cepSpring.services.ExcelService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class ExecAPICorreios {
+
     public static final String readFile = "Caminho do arquivo que será lido";
+    CepService cepService = new CepService();
+    ExcelService excelService= new ExcelService();
 
-    public static void main(String[] args) throws Exception {
-
+    /*
+    Esse metodo busca uma planilha com ceps da sua maquina, busca um por um na api dos correios
+    e retorna uma nova planilha com todos os ceps e informações adicionais.
+     */
+    public void execBuscaCeps() throws Exception {
         List<String> notFoundZipCodes = new ArrayList<>();
 
-        CepService cepService = new CepService();
-        ExcelService excelService= new ExcelService();
-
         System.out.println("Programa Iniciado!");
-        List<Address> listAddress = new ArrayList<Address>();
-        List<ResponseCorreios> responses = new ArrayList<ResponseCorreios>();
+        List<Address> listAddress;
+        List<ResponseCorreios> responses = new ArrayList<>();
 
         listAddress = excelService.readDocExcel(readFile);
 
         if(listAddress.isEmpty()){
-            System.out.println("Address not found");
+            System.out.println("Addresses not found");
         }else {
             int numAdd = 1;
             for(Address a : listAddress){

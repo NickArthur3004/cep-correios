@@ -1,27 +1,28 @@
-package com.nicolas.services;
+package com.nicolas.cepSpring.services;
 
-import com.nicolas.Main;
-import com.nicolas.models.Address;
-import com.nicolas.responses.ResponseCorreios;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import com.nicolas.cepSpring.execs.ExecAPICorreios;
+import com.nicolas.cepSpring.models.Address;
+import com.nicolas.cepSpring.responses.ResponseCorreios;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@Service
 public class ExcelService {
 
     List<Address> listAddress = new ArrayList<Address>();
     public List<Address> readDocExcel(String fileName) throws IOException{
         try{
-            FileInputStream file = new FileInputStream(new File(Main.readFile));
+            FileInputStream file = new FileInputStream(new File(ExecAPICorreios.readFile));
 
             XSSFWorkbook workbook = new XSSFWorkbook(file);
 
