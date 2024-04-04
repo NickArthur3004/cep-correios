@@ -17,14 +17,14 @@ public class CepController {
     private CepService service;
 
     @GetMapping(value = "/range")
-    List<ResponseCorreios> findCepsByRange(@RequestParam String cepInicial, @RequestParam String cepFinal) throws Exception {
-        List<ResponseCorreios> responses = service.findZipCodesByRange(cepInicial, cepFinal);
+    ResponseEntity<?> findCepsByRange(@RequestParam String cepInicial, @RequestParam String cepFinal) throws Exception {
+        ResponseEntity responses = service.findZipCodesByRange(cepInicial, cepFinal);
         return responses;
     }
 
     @GetMapping(value = "/{cep}")
-    ResponseCorreios findByCep(@PathVariable(value = "cep") String cep) throws Exception {
-        ResponseCorreios response = service.findZipCode(cep);
+    ResponseEntity<?> findByCep(@PathVariable(value = "cep") String cep) throws Exception {
+        ResponseEntity<?> response = service.findZipCode(cep);
         return response;
     }
 }

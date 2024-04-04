@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class ExcelService {
 
-    List<Address> listAddress = new ArrayList<Address>();
+    /*List<Address> listAddress = new ArrayList<Address>();
     public List<Address> readDocExcel(String fileName) throws IOException{
         try{
             FileInputStream file = new FileInputStream(new File(ExecAPICorreios.readFile));
@@ -93,5 +93,5 @@ public class ExcelService {
             }
         }
         return "Excel file created successfully !!!";
-    }
+    }*/
 }

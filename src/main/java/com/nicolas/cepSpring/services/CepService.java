@@ -2,10 +2,16 @@ package com.nicolas.cepSpring.services;
 
 
 import com.google.gson.*;
+import com.nicolas.cepSpring.enums.Messages;
+import com.nicolas.cepSpring.exceptions.ErrorResponse;
+import com.nicolas.cepSpring.exceptions.ZipCodeInvalidException;
 import com.nicolas.cepSpring.exceptions.ZipCodeNotFoundException;
 import com.nicolas.cepSpring.models.Util;
 import com.nicolas.cepSpring.responses.ResponseCorreios;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,18 +20,21 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+@ControllerAdvice
 @Service
 public class CepService {
     private String token = "Bearer " + "Token de acesso a api correios";
     static String webService = "Url da api que deseja usar";
 
-    public ResponseCorreios findZipCode(String cep) throws Exception {
+    public ResponseEntity<?> findZipCode(String cep) throws Exception {
+        try {
+            validateCep(cep);
 
         cep = formatCep(cep);
 
         String pathUrl = webService + "/" + cep;
 
-        try {
+
             BufferedReader response = chamadaEndpoint(pathUrl);
 
             String jsonEmString = Util.converteJsonEmString(response);
@@ -33,21 +42,29 @@ public class CepService {
             Gson gson = new Gson();
             ResponseCorreios responseCorreios = gson.fromJson(jsonEmString, ResponseCorreios.class);
 
-            return responseCorreios;
+            return ResponseEntity.ok().body(responseCorreios);
 
+        }catch (ZipCodeInvalidException e) {
+            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), e.getStatus().toString());
+            return ResponseEntity.status(e.getStatus()).body(errorResponse);
+        }catch (ZipCodeNotFoundException e) {
+            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), e.getStatus().toString());
+            return ResponseEntity.status(e.getStatus()).body(errorResponse);
         }catch (Exception e) {
             throw new Exception("ERRO: " + e);
         }
     }
 
-    public List<ResponseCorreios> findZipCodesByRange(String cepInicial, String cepFinal) throws Exception {
-
-        String pathUrl = webService + "?" +
-                "cepInicial="+ cepInicial +
-                "&cepFinal="+ cepFinal +
-                "&page=" + 0 +
-                "&size=" + 50;
+    public ResponseEntity<?> findZipCodesByRange(String cepInicial, String cepFinal) throws RuntimeException, Exception {
         try {
+            validateCep(cepInicial);
+            validateCep(cepFinal);
+
+            String pathUrl = webService + "?" +
+                    "cepInicial=" + cepInicial +
+                    "&cepFinal=" + cepFinal +
+                    "&page=" + 0 +
+                    "&size=" + 50;
             Gson gson = new Gson();
             List<ResponseCorreios> objectsList = new ArrayList<>();
             StringBuilder jsonResponse = new StringBuilder();
@@ -63,24 +80,25 @@ public class CepService {
             JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
             JsonArray itensArray = jsonObject.getAsJsonArray("itens");
 
+            if (itensArray == null) {
+                throw new ZipCodeNotFoundException(HttpStatus.BAD_REQUEST);
+            }
+
             for (JsonElement element : itensArray) {
                 ResponseCorreios obj = gson.fromJson(element, ResponseCorreios.class);
                 objectsList.add(obj);
             }
-            return objectsList;
-
-        }catch (Exception e) {
-            throw new Exception("ERRO: " + e);
+            return ResponseEntity.ok().body(objectsList);
+        } catch (ZipCodeInvalidException e) {
+            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), e.getStatus().toString());
+            return ResponseEntity.status(e.getStatus()).body(errorResponse);
+        }catch (ZipCodeNotFoundException e){
+            ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), e.getStatus().toString());
+            return ResponseEntity.status(e.getStatus()).body(errorResponse);
         }
     }
 
-    public String formatCep(String zipCode){
-        zipCode = zipCode.replaceAll("-","");
-        return zipCode;
-    }
-
     public BufferedReader chamadaEndpoint(String pathUrl) throws Exception {
-        try {
             URL url = new URL(pathUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
@@ -89,14 +107,22 @@ public class CepService {
 
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_NOT_FOUND) {
-                throw new ZipCodeNotFoundException();
+                throw new ZipCodeNotFoundException(HttpStatus.NOT_FOUND);
             }
 
             BufferedReader response = new BufferedReader(new InputStreamReader((connection.getInputStream())));
             return response;
+
+    }
+
+    public boolean validateCep(String cep) throws ZipCodeInvalidException {
+        if(cep.length() != 8) {
+            throw new ZipCodeInvalidException(Messages.ZIPCODE_INVALID.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        catch (Exception e) {
-            throw new Exception("ERRO: " + e);
-        }
+        return true;
+    }
+    public String formatCep(String zipCode){
+        zipCode = zipCode.replaceAll("-","");
+        return zipCode;
     }
 }
