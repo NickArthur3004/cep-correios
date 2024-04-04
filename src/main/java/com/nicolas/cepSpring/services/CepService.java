@@ -30,9 +30,9 @@ public class CepService {
         try {
             validateCep(cep);
 
-        cep = formatCep(cep);
+            cep = formatCep(cep);
 
-        String pathUrl = webService + "/" + cep;
+            String pathUrl = webService + "/" + cep;
 
 
             BufferedReader response = chamadaEndpoint(pathUrl);
@@ -50,8 +50,6 @@ public class CepService {
         }catch (ZipCodeNotFoundException e) {
             ErrorResponse errorResponse = new ErrorResponse(e.getMessage(), e.getStatus().toString());
             return ResponseEntity.status(e.getStatus()).body(errorResponse);
-        }catch (Exception e) {
-            throw new Exception("ERRO: " + e);
         }
     }
 

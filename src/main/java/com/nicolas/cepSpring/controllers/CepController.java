@@ -1,6 +1,7 @@
 package com.nicolas.cepSpring.controllers;
 
 
+import com.nicolas.cepSpring.exceptions.ErrorResponse;
 import com.nicolas.cepSpring.responses.ResponseCorreios;
 import com.nicolas.cepSpring.services.CepService;
 import org.springframework.beans.factory.annotation.Autowired;

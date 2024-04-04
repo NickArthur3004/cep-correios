@@ -3,7 +3,7 @@ package com.nicolas.cepSpring.models;
 
 public class Address {
 
-    private String zipCode;
+    /*private String zipCode;
 
     public Address() {
     }
@@ -17,5 +17,5 @@ public class Address {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
-    }
+    }*/
 }

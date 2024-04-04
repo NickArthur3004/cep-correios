@@ -20,7 +20,7 @@ public class ResponseCorreios {
     public ResponseCorreios() {
     }
 
-    public ResponseCorreios(String cep, String uf, Long numeroLocalidade, String localidade,
+    /*public ResponseCorreios(String cep, String uf, Long numeroLocalidade, String localidade,
                             String logradouro, String tipoLogradouro, String nomeLogradouro,
                             String complemento, String bairro, Integer tipoCEP,
                             String cepUnidadeOperacional, String lado, Integer numeroInicial, Integer numeroFinal) {
@@ -38,7 +38,7 @@ public class ResponseCorreios {
         this.lado = lado;
         this.numeroInicial = numeroInicial;
         this.numeroFinal = numeroFinal;
-    }
+    }*/
 
     public String getCep() {
         return cep;
@@ -152,7 +152,7 @@ public class ResponseCorreios {
         this.numeroFinal = numeroFinal;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "ResponseCorreios{" +
                 "cep='" + cep + '\'' +
@@ -170,5 +170,5 @@ public class ResponseCorreios {
                 ", numeroInicial=" + numeroInicial +
                 ", numeroFinal=" + numeroFinal +
                 '}';
-    }
+    }*/
 }
