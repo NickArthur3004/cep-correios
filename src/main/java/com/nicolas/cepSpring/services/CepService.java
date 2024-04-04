@@ -28,9 +28,8 @@ public class CepService {
 
     public ResponseEntity<?> findZipCode(String cep) throws Exception {
         try {
-            validateCep(cep);
-
             cep = formatCep(cep);
+            validateCep(cep);
 
             String pathUrl = webService + "/" + cep;
 

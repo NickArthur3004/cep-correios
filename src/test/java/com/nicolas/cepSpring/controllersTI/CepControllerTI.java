@@ -3,6 +3,7 @@ package com.nicolas.cepSpring.controllersTI;
 import com.nicolas.cepSpring.enums.Messages;
 import com.nicolas.cepSpring.exceptions.ErrorResponse;
 import com.nicolas.cepSpring.responses.ResponseCorreios;
+import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,14 +21,18 @@ public class CepControllerTI extends BaseControllerTI{
 
     String RESOURCE_BASE_URL = "/cep";
 
+    @Before
+    public void setUp(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        requestEntity = new HttpEntity<>(headers);
+    }
+
     @Test
     @DisplayName("Busca Cep´s por range")
     void testFindCepByRange(){
             String cepInicial = "06413000";
             String cepFinal = "06413999";
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
             StringBuilder url = new StringBuilder(RESOURCE_BASE_URL);
             url.append("/range");
@@ -44,9 +49,6 @@ public class CepControllerTI extends BaseControllerTI{
     void testFindCepByRangeNotFound(){
         String cepInicial = "06413001";
         String cepFinal = "06413002";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         StringBuilder url = new StringBuilder(RESOURCE_BASE_URL);
         url.append("/range");
@@ -64,9 +66,6 @@ public class CepControllerTI extends BaseControllerTI{
     void testFindCepInvalidByRange(){
         String cepInicial = "0641300";
         String cepFinal = "06413002";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         StringBuilder url = new StringBuilder(RESOURCE_BASE_URL);
         url.append("/range");
@@ -83,9 +82,6 @@ public class CepControllerTI extends BaseControllerTI{
     @DisplayName("Busca de endereço por cep")
     void testFindCep(){
         String cep = "06413000";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         StringBuilder url = new StringBuilder(RESOURCE_BASE_URL);
         url.append("/" + cep);
@@ -97,12 +93,9 @@ public class CepControllerTI extends BaseControllerTI{
     }
 
     @Test
-    @DisplayName("Busca de endereço por cep mas ele não é encontrado")
+    @DisplayName("Busca de endereço por cep mas o cep não é encontrado")
     void testCepNotFound(){
         String cep = "06413001";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         StringBuilder url = new StringBuilder(RESOURCE_BASE_URL);
         url.append("/" + cep);
@@ -117,9 +110,6 @@ public class CepControllerTI extends BaseControllerTI{
     @DisplayName("Busca de endereço por cep mas o cep é invalido")
     void testFindCepInvalid(){
         String cep = "0641300";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
 
         StringBuilder url = new StringBuilder(RESOURCE_BASE_URL);
         url.append("/" + cep);
